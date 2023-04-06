@@ -1,5 +1,8 @@
 package com.educative.grokking.templates;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class LinkedList<T> {
     public LinkedListNode<T> head;
     // constructor will be used to make a LinkedList type object
@@ -27,5 +30,14 @@ public class LinkedList<T> {
         return head;
     }
 
+    public static <T> String printList(LinkedListNode<T> head){
+        var ts = new ArrayList<T>();
+        var cur = head;
+        while (cur != null) {
+            ts.add(cur.data);
+            cur = cur.next;
+        }
+        return ts.stream().map(Object::toString).collect(Collectors.joining(" -> "));
+    }
 
 }
