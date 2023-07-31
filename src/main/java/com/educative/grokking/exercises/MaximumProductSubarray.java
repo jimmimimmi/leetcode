@@ -7,6 +7,14 @@ public class MaximumProductSubarray {
         if (nums == null || nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];
 
+        //1,5,6,7,3,6,8
+        //1,5,6,7,0,5,6
+        //-7,0,-5
+        //1,5,6,7,-1,5,6
+        //1,5,6,7,-1,5,-6
+        //1,-5,6,7,-1,5,-6
+
+
         var minSoFar = nums[0];
         var maxSoFar = nums[0];
         var best = nums[0];
