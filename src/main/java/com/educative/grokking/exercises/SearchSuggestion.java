@@ -1,36 +1,16 @@
 package com.educative.grokking.exercises;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 // https://leetcode.com/problems/search-suggestions-system/editorial/
 public class SearchSuggestion {
-    class Node {
+    static class Node {
         Node[] child = new Node[26];
-        LinkedList<String> searchWords = new LinkedList<>();
-        boolean isWord;
+        String word;
     }
 
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
-
-        /*
-        products = [“carpet”, “cart”, “car”, “camera”, “crate”]
-
-        searched word = “camera”
-
-                                              c
-                                 a                            r
-                    m              r                          a
-                    e            p    t                        t
-                    r            e                              e
-                    a            t
-         */
-
-
         var root = new Node();
-        Arrays.sort(products);
         for (var product : products) {
             var node = root;
             for (int j = 0; j < product.length(); j++) {
@@ -38,54 +18,57 @@ public class SearchSuggestion {
                 if (node.child[c] == null) {
                     node.child[c] = new Node();
                 }
-                node = node.child[c];
+
                 if (j == product.length() - 1) {
-                    node.isWord = true;
-                    node.searchWords.add(product.substring(0, j + 1));
+                    node.child[c].word = product;
                 }
+                node = node.child[c];
             }
         }
+        // O(N) N - amount of characters in products array
 
         var result = new ArrayList<List<String>>();
         for (int i = 0; i < searchWord.length(); i++) {
-            var subRes = new ArrayList<String>();
-            explore(root, searchWord.substring(0, i + 1), 0, subRes);
+            var subRes = explore(root, searchWord.substring(0, i + 1));
             result.add(subRes);
+        }
+
+        // O(K*N)
+
+        return result;
+    }
+
+    private static List<String> explore(Node node, String prefix) {
+        var currNode = node;
+        for (int i = 0; i < prefix.length(); i++) {
+            var charIdx = prefix.charAt(i) - 'a';
+            var child = currNode.child[charIdx];
+            if (child == null) {
+                return new ArrayList<>();
+            }
+            currNode = child;
+        }
+
+        var result = new ArrayList<String>();
+        var queue = new Stack<Node>();
+        queue.add(currNode);
+        while (!queue.isEmpty()) {
+            currNode = queue.pop();
+            if (currNode.word != null) {
+                result.add(currNode.word);
+                if (result.size() == 3) {
+                    return result;
+                }
+            }
+            for (int i = currNode.child.length - 1; i >= 0; i--) {
+                if (currNode.child[i] != null) {
+                    queue.push(currNode.child[i]);
+                }
+            }
         }
 
         return result;
     }
 
-    private static void explore(Node node, String prefix, int prefixIdx, ArrayList<String> result) {
-        if (result.size() == 3) {
-            return;
-        }
-        if (prefixIdx >= prefix.length()){
-            for (int i = 0; i < node.child.length; i++) {
-                if (node.child[i] != null){
-                    if (node.child[i].searchWords.peekFirst() != null){
-                        if (result.size() == 3) {
-                            return;
-                        }
-                        result.add(node.child[i].searchWords.peekFirst());
-                        if (result.size() == 3) {
-                            return;
-                        }
-                    }
-                    explore(node.child[i], prefix, prefixIdx, result);
-                }
-            }
-            return;
-        }
 
-        var child = node.child[prefix.charAt(prefixIdx) - 'a'];
-        if (child == null) return;
-        if (child.isWord) {
-            result.add(prefix.substring(0, prefixIdx + 1));
-            if (result.size() == 3) {
-                return;
-            }
-        }
-        explore(child, prefix, prefixIdx + 1, result);
-    }
 }
