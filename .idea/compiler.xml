@@ -9,8 +9,5 @@
         <module name="jimmi-algo" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="jimmi-algo" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
