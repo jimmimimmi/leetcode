@@ -35,10 +35,10 @@ class EncodeandDecodeStrings {
         val arr = s.toCharArray()
         var i = 0
         val result = ArrayList<String>()
-        while (i < arr.size){
+        while (i < arr.size) {
             val l = decodeLength(arr, i)
             val sb = StringBuilder()
-            for (j in i + 4 until i + 4 + l){
+            for (j in i + 4 until i + 4 + l) {
                 sb.append(arr[j])
             }
             result.add(sb.toString())

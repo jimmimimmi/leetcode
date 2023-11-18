@@ -5,6 +5,7 @@ class ShortestBridge {
     private val neighbours = arrayOf(arrayOf(-1, 0), arrayOf(0, 1), arrayOf(1, 0), arrayOf(0, -1))
 
     fun shortestBridge(grid: Array<IntArray>): Int {
+        val parents = (0 until 4).toList().toTypedArray()
         var nonZeroCell: Pair<Int, Int>? = null
         grid.forEachIndexed { rowIdx, ints ->
             ints.forEachIndexed { colIdx, i ->
