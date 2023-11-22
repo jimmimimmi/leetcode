@@ -52,6 +52,12 @@ class MeetingRoomsIII {
 
         */
     fun mostBooked(n: Int, meetings: Array<IntArray>): Int {
+        val queue = ArrayDeque<Pair<Int, Int>>()
+        val ss = queue.removeLast()
+
+        val visited = HashSet<Pair<Int,Int>>()
+
+        visited.contains(1 to 2)
         if (meetings.size == 1) {
             return 0
         }
