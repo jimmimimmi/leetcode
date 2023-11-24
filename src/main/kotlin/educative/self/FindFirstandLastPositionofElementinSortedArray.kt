@@ -1,5 +1,7 @@
 package educative.self
 
+import java.util.*
+
 class FindFirstandLastPositionofElementinSortedArray {
     fun searchRange(nums: IntArray, target: Int): IntArray {
         val rightResul = rightIdOfTarget(nums, target)
