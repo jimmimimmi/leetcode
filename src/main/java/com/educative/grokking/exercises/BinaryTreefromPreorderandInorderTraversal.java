@@ -52,12 +52,12 @@ public class BinaryTreefromPreorderandInorderTraversal {
             return null;
         }
 
-        var inorderValueIndexMap = new HashMap<Integer, Integer>();
+        var inorderValueToIndexMap = new HashMap<Integer, Integer>();
         for (int i = 0; i < iOrder.length; i++) {
-            inorderValueIndexMap.put(iOrder[i], i);
+            inorderValueToIndexMap.put(iOrder[i], i);
         }
 
-        return build(0, pOrder.length - 1, new int[]{0}, pOrder, inorderValueIndexMap);
+        return build(0, pOrder.length - 1, new int[]{0}, pOrder, inorderValueToIndexMap);
     }
 
     private static TreeNode build(int left, int right, int[] currIdx, int[] pOrder, HashMap<Integer, Integer> iOrderMap) {
